@@ -1,58 +1,63 @@
 return {
-    { -- manage LSP servers, DAP servers, linters, and formatters -> mason
-        "williamboman/mason.nvim",
-
-        config = function ( )
-
-        require("mason").setup({
+  { -- manage LSP/DAP/linters/formatters
+    "williamboman/mason.nvim",
+    config = function()
+      require("mason").setup({
         ui = {
-        icons = {
+          icons = {
             package_installed = "✓",
             package_pending = "➜",
             package_uninstalled = "✗",
-            }
-         }
-        })
-        end,
-    },
+          },
+        },
+      })
+    end,
+  },
 
-    { -- mason-lspconfig bridges mason.nvim with the lspconfig plugin - making it easier to use both plugins together.
-        "williamboman/mason-lspconfig.nvim",
+  { -- bridge mason with LSP server installs
+    "williamboman/mason-lspconfig.nvim",
+    config = function()
+      require("mason-lspconfig").setup({
+        ensure_installed = { "lua_ls", "rust_analyzer" },
+      })
+    end,
+  },
 
-        config = function ( )
+  { -- LSP configuration (NEW API)
+    "neovim/nvim-lspconfig",
+    config = function()
+      local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-        require("mason-lspconfig").setup ({
-        ensure_installed = { "lua_ls", "rust_analyzer" }, 
-        -- for adding new servers
-        -- ensure_installed = { "lua_ls", "rust_analyzer", "new servername" },
-        -- then go to nvim-lspconfig
-        -- and past this -> lspconfig.lua_ls.setup({})
-        })
+      -- Lua LSP
+      vim.lsp.config("lua_ls", {
+        capabilities = capabilities,
+        settings = {
+          Lua = {
+            diagnostics = {
+              globals = { "vim" },
+            },
+            workspace = {
+              checkThirdParty = false,
+            },
+          },
+        },
+      })
 
-        end,
-    },
+      -- Rust LSP
+      vim.lsp.config("rust_analyzer", {
+        capabilities = capabilities,
+      })
 
-    { -- nvim lspconfig
-        "neovim/nvim-lspconfig",
+      -- Enable servers
+      vim.lsp.enable({
+        "lua_ls",
+        "rust_analyzer",
+      })
 
-        config = function()
-        local capabilities = require('cmp_nvim_lsp').default_capabilities() -- provide snippet source to luasnip and cmp-nvim-lsp
-
-        local lspconfig = require("lspconfig")
-        lspconfig.lua_ls.setup({
-            capabilities = capabilities
-        })
-        lspconfig.rust_analyzer.setup({
-            capabilities = capabilities
-        })
-        -- lspconfig.servername.setup({})
-
-        vim.keymap.set('n','K', vim.lsp.buf.hover, {})
-        vim.keymap.set('n','gd', vim.lsp.buf.definition, {})    -- crtl+o or crtl +i to come back
-        vim.keymap.set({'n'},'<leader>ca', vim.lsp.buf.code_action, {})
-        -- to bring back diagnostic -> vim.diagnostic.open_float()
-        end
-    }
-
-
+      -- Keymaps
+      vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
+      vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
+      vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
+    end,
+  },
 }
