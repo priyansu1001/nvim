@@ -13,7 +13,7 @@ return {
             }
          }
         })
-        end
+        end,
     },
 
     { -- mason-lspconfig bridges mason.nvim with the lspconfig plugin - making it easier to use both plugins together.
@@ -29,7 +29,7 @@ return {
         -- and past this -> lspconfig.lua_ls.setup({})
         })
 
-        end
+        end,
     },
 
     { -- nvim lspconfig
