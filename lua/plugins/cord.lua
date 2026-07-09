@@ -10,6 +10,12 @@ return
 	require('cord').setup {
     -- Your configuration options go here
 
+	timestanp = {
+		enabled = true,
+		reset_on_idle = false,
+		reset_on_change = false,
+		shared = true,
+	}
 		idle = {
 				smart_idle = true,
 				details = 'Idling',
