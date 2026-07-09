@@ -15,7 +15,7 @@ return
 		reset_on_idle = false,
 		reset_on_change = false,
 		shared = true,
-	}
+	},
 		idle = {
 				smart_idle = true,
 				details = 'Idling',
