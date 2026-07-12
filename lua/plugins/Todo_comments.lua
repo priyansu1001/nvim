@@ -7,3 +7,13 @@ return{
     -- refer to the configuration section below
   }
 }
+
+
+-- TODO: implement login
+-- FIX: memory leak
+-- HACK: temporary workaround
+-- NOTE: refactor later
+-- WARN: unsafe operation
+-- PERF: optimize this
+-- TEST: add unit tests
+
