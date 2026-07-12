@@ -27,6 +27,8 @@ vim.opt.shiftwidth=4
 vim.opt.backup = false
 vim.opt.termguicolors = true
 vim.opt.guifont = "monospace:h17"
+vim.opt.wrap = true       -- Enable line wrapping
+vim.opt.linebreak = true  -- Wrap long lines at a word boundary
 
 -- REMAPS--
 -- make another file and include it
