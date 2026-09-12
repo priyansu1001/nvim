@@ -10,7 +10,7 @@ return
 	require('cord').setup {
     -- Your configuration options go here
 
-	timestanp = {
+	timestamp = {
 		enabled = true,
 		reset_on_idle = false,
 		reset_on_change = false,
